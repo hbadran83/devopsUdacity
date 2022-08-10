@@ -11,7 +11,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - mydemocmd
-      - run: /bin/bash return 1
+      - run: echo "Ok"
       - run:
            name: ALERTING 
            command: echo "ERROR HAPPENED"
