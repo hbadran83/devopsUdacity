@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: echo "my name is hussein badran -- senior devops engineer" > output.txt
       - persist_to_workspace:
-          root: /tmp/dir
+          root: .
           paths:
             - outfile
             
@@ -22,7 +22,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /tmp/dir
+          at: .
       - run: cat output.txt
 
 workflows:
