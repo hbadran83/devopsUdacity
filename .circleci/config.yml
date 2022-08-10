@@ -1,9 +1,9 @@
 version: 2.1
-command:
+commands:
  mydemocmd:
   description: demo for commands reuse
   steps:
-   - run:  ${CIRCLE_WORKFLOW_ID}
+   - run: echo ${CIRCLE_WORKFLOW_ID}
 
 jobs:
   my_job:
