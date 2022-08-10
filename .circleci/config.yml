@@ -29,8 +29,7 @@ jobs:
       - run: cat output.txt
 
 workflows:
-  welcome:
-    # Run the welcome/run job in its own container
+
     jobs:
       - say-hello
       - print_hello
