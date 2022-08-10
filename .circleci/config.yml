@@ -28,7 +28,6 @@ jobs:
 workflows:
  myworkflow:
     jobs:
-      - say-hello
       - print_hello
       - print_world:
           requires:
