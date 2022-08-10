@@ -11,11 +11,22 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - mydemocmd
+      - run: /bin/bash return 1
+      - run:
+           name: ALERTING 
+           command: echo "ERROR HAPPENED"
+           when: on_fail
+
+
+   
+
+
 
 workflows:
   my_workflow:
     jobs:
       - my_job
+      
     
  
 
