@@ -29,10 +29,10 @@ jobs:
       # - save_cache:
       #       keys: 
       #         - inventory-{{ checksum "ip.txt" }
-          - persist_to_workspace:
-              root: ~/
-              paths:
-                - ip.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - ip.txt
       - run:
             name: Delete Cloudformation Stack
             command: |
