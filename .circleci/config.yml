@@ -1,31 +1,37 @@
 version: 2.1
-commands:
- mydemocmd:
-  description: demo for commands reuse
-  steps:
-   - run: echo ${CIRCLE_WORKFLOW_ID}
+# Use a package of configuration called an orb.
+orbs:
 
 jobs:
-  my_job:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - mydemocmd
-      - run: echo "Ok"
-      - run:
-           name: ALERTING 
-           command: echo "ERROR HAPPENED"
-           when: on_fail
-
-
-   
+  myjob1:  # Choose any name, such as `build`
+      # The primary container, where your job's commands will run
+      docker:
+        - image: 
+      steps:
+        - checkout # check out the code in the project directory
+        - run: echo "hello world" # run the `echo` command
 
 
 
+  create_infrastructure: 
+        docker:
+          - image: amazon/aws-cli
+        steps:
+          - checkout
+          - run:
+              name: Create Cloudformation Stack
+              command: |
+                aws cloudformation deploy \
+                  --template-file template.yml \
+                  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+                  --region us-east-1        
+# Sequential workflow
 workflows:
-  my_workflow:
+  # Name the workflow
+  myWorkflow:
     jobs:
-      - my_job
+      - Create Cloudformation Stack
+   
       
     
  
