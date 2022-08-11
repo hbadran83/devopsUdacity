@@ -1,33 +1,30 @@
 version: 2.1
-# Use a package of configuration called an orb.
-orbs:
-
 jobs:
   create_infrastructure: 
-        docker:
-          - image: amazon/aws-cli
-        steps:
-          - checkout
-          - run:
-              name: Create Cloudformation Stack
-              command: |
-                aws cloudformation deploy \
-                  --template-file template.yml \
-                  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-                  --region us-east-1  
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --region us-east-1  
 
   get_server_publicIP:
-        docker:
-        - image: amazon/aws-cli
-      steps:
-        - checkout
-        - run:
-            name: Get Created Instance IP
-            command: |
-             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
-        - persist_to_workspace:
-              root: .
-              path: .
+    docker:
+    - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Get Created Instance IP
+          command: |
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
+      - persist_to_workspace:
+            root: .
+            path: .
 
 
   configure_infrastructure: 
@@ -62,7 +59,7 @@ workflows:
       - configure_infrastructure:
           requires:
           - create_infrastructure
-          
+
    
       
     
