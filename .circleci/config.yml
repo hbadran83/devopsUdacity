@@ -19,6 +19,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependency
+          command: |
+            apt install tar -y
+      - run:
           name: Get Created Instance IP
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
