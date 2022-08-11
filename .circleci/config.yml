@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Get Created Instance IP
           command: |
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> ip.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text > ip.txt
       - save_cache:
             keys: 
               - inventory-{{ checksum "ip.txt" }
