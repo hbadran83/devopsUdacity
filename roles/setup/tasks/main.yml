@@ -1,0 +1,45 @@
+---
+- name: "update apt packages."
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: "upgrade packages"
+  become: true
+  apt:
+    upgrade: yes
+
+- name: "Install dependencies"
+  become: true
+  apt:
+    pkg:
+      - nodejs
+      - npm
+    state: latest
+    update_cache: true
+
+- name: "Install pm2"
+  become: true
+  ansible.builtin.command:
+    cmd: npm install pm2 -g
+ 
+
+- name: "Creates directory"
+  file:
+    path: ~/web
+    state: directory
+
+
+
+- name: "Copy files"
+  copy:
+    src: index.js
+    dest: ~/web
+
+
+
+
+- name: "restart server"
+  ansible.builtin.command:
+    cmd: pm2 start ~/web/index.js -f
+
