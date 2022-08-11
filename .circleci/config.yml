@@ -27,8 +27,8 @@ jobs:
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
       - persist_to_workspace:
-            root: .
-            path: .
+            root: ~/inventory
+            path: ~/inventory
 
 
   configure_infrastructure: 
@@ -40,7 +40,7 @@ jobs:
               # You can get this ID in the section where you registered the SSH Key
               fingerprints: ["dd:f6:9d:23:7a:5e:ac:25:58:31:a5:17:e0:0c:ef:4f"] 
       - attach_workspace:
-          at: .
+          at: ~/inventory
       - run:
          name: import IP to inventory
          command: cp inventory inventory
@@ -49,6 +49,21 @@ jobs:
           name: Install Ansible and 
           command: |
              ansible-playbook main-remote.yml -i inventory --private-key udacity.pem
+
+  delete_stack:
+  docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+              # You can get this ID in the section where you registered the SSH Key
+              fingerprints: ["dd:f6:9d:23:7a:5e:ac:25:58:31:a5:17:e0:0c:ef:4f"] 
+      - run:
+          name: Delete Cloudformation Stack
+          command: |
+            aws cloudformation delete stack \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --region us-east-1          
 
 
 # Sequential workflow
@@ -60,6 +75,8 @@ workflows:
       - get_server_publicIP:
           requires:
             - create_infrastructure
+      - delete_stack:
+          when: on_fail    
       - configure_infrastructure:
           requires:
           - create_infrastructure
