@@ -60,9 +60,13 @@ jobs:
       - run:
           name: Install Ansible and 
           command: |
+             yum install ansible -y
              ansible-playbook main-remote.yml -i inventory --private-key udacity.pem
 
-  
+      - run:
+          name: Run Ansible Playbook 
+          command: |
+             ansible-playbook main-remote.yml -i inventory --private-key udacity.pem
 
 
 # Sequential workflow
