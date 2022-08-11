@@ -58,10 +58,10 @@ jobs:
          command: echo "[all]" >> inventory || cat ~/ip.txt >> inventory
       
       - run:
-          name: Install Ansible and 
+          name: Install Ansible 
           command: |
-             yum install ansible -y
-             ansible-playbook main-remote.yml -i inventory --private-key udacity.pem
+             apk add --update ansible 
+
 
       - run:
           name: Run Ansible Playbook 
