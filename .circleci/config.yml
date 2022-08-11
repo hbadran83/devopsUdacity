@@ -51,7 +51,7 @@ jobs:
              ansible-playbook main-remote.yml -i inventory --private-key udacity.pem
 
   delete_stack:
-    docker:
+      docker:
         - image: python:3.7-alpine3.11
       steps:
         - checkout
