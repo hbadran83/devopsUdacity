@@ -27,8 +27,8 @@ jobs:
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
       - persist_to_workspace:
-            root: ~/inventory
-            path: ~/inventory
+            root: .
+            path: .
       - run:
             name: Delete Cloudformation Stack
             command: |
@@ -46,7 +46,7 @@ jobs:
               # You can get this ID in the section where you registered the SSH Key
               fingerprints: ["dd:f6:9d:23:7a:5e:ac:25:58:31:a5:17:e0:0c:ef:4f"] 
       - attach_workspace:
-          at: ~/inventory
+          at: .
       - run:
          name: import IP to inventory
          command: cp inventory inventory
