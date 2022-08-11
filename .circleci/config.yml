@@ -32,7 +32,7 @@ jobs:
       - run:
             name: Delete Cloudformation Stack
             command: |
-              aws cloudformation delete stack \
+              aws cloudformation delete-stack \
                 --stack-name myStack \
                 --region us-east-1   
             when: on_fail    
@@ -70,7 +70,7 @@ workflows:
             - create_infrastructure        
       - configure_infrastructure:
           requires:
-          - create_infrastructure
+          - get_server_publicIP
 
    
       
