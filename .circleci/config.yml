@@ -26,9 +26,13 @@ jobs:
           name: Get Created Instance IP
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text > ip.txt
-      - save_cache:
-            keys: 
-              - inventory-{{ checksum "ip.txt" }
+      # - save_cache:
+      #       keys: 
+      #         - inventory-{{ checksum "ip.txt" }
+          - persist_to_workspace:
+              root: ~/
+              paths:
+                - ip.txt
       - run:
             name: Delete Cloudformation Stack
             command: |
@@ -45,11 +49,13 @@ jobs:
       - add_ssh_keys:
               # You can get this ID in the section where you registered the SSH Key
               fingerprints: ["dd:f6:9d:23:7a:5e:ac:25:58:31:a5:17:e0:0c:ef:4f"] 
-      - restore_cache:
-          keys: inventory-{{ checksum "ip.txt" }
+      # - restore_cache:
+      #     keys: inventory-{{ checksum "ip.txt" }
+      - attach_workspace:
+          at: ~/
       - run:
          name: import IP to inventory
-         command: echo "[all]" >> inventory || cat ip.txt >> inventory
+         command: echo "[all]" >> inventory || cat ~/ip.txt >> inventory
       
       - run:
           name: Install Ansible and 
