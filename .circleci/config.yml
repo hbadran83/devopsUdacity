@@ -30,7 +30,7 @@ workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      - Create Cloudformation Stack
+      - create_infrastructure
    
       
     
