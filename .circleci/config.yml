@@ -76,7 +76,8 @@ workflows:
           requires:
             - create_infrastructure
       - delete_stack:
-          when: on_fail    
+          when: 
+            - on_fail    
       - configure_infrastructure:
           requires:
           - create_infrastructure
