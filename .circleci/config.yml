@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Install dependency
           command: |
-            yum install gzip -y
+            yum install gzip tar -y
       - run:
           name: Get Created Instance IP
           command: |
