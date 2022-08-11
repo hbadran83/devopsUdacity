@@ -25,14 +25,14 @@ jobs:
       - run:
           name: Get Created Instance IP
           command: |
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text > ~/ip.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text > ~/out.txt
       # - save_cache:
       #       keys: 
       #         - inventory-{{ checksum "ip.txt" }
       - persist_to_workspace:
           root: ~/
           paths:
-            - ip.txt
+            - out.txt
       - run:
             name: Delete Cloudformation Stack
             command: |
@@ -55,7 +55,7 @@ jobs:
           at: ~/
       - run:
          name: import IP to inventory
-         command: echo "[all]" >> inventory || cat ~/ip.txt >> inventory
+         command: echo "[all]" >> inventory || cat ~/out.txt >> inventory
       
       - run:
           name: Install Ansible 
