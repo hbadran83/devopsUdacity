@@ -57,7 +57,7 @@ jobs:
           at: ~/
       - run:
          name: Import IP to Inventory
-         command: echo "[all]" > inventory || cat ~/out.txt >> inventory
+         command: echo "[all]" > inventory || echo `cat ~/out.txt`` >> inventory
       - run: cat ~/out.txt
       - run:
           name: Install Ansible 
