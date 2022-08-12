@@ -13,7 +13,7 @@ jobs:
               --stack-name myStack \
               --region us-east-1  
 
-  get_server_publicIP:
+  get_server_publicip:
     docker:
     - image: amazon/aws-cli
     steps:
@@ -82,7 +82,7 @@ workflows:
             - create_infrastructure        
       - configure_infrastructure:
           requires:
-          - get_server_publicIP
+          - get_server_publicip
 
    
       
