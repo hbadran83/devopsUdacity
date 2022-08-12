@@ -13,7 +13,10 @@ Resources:
       # You may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
       ImageId: 'ami-09e67e426f25ce0d7' 
       InstanceType: t3.micro
-       KeyName: "udacity"
+      KeyName: "udacity"
+      Tags:
+        - Name: Project
+        - Value: udacity
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
