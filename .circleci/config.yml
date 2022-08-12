@@ -33,6 +33,8 @@ jobs:
           root: ~/
           paths:
             - out.txt
+
+      - run: cat ~/out.txt      
       - run:
             name: Delete Cloudformation Stack
             command: |
