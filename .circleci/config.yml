@@ -117,7 +117,9 @@ workflows:
       - configure_infrastructure:
           requires:
           - get_server_publicip
-
+      - smoke_test:
+          requires:
+           - get_server_publicip
    
       
     
