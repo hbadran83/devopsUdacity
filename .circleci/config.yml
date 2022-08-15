@@ -119,7 +119,7 @@ workflows:
           - get_server_publicip
       - smoke_test:
           requires:
-           - get_server_publicip
+           - configure_infrastructure
    
       
     
